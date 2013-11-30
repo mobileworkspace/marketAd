@@ -31,7 +31,8 @@
 * ------------------------------------------------------------------------------------------------------ *
 */
 
-require_once ("/src/data/config.php");
+set_include_path('./'.PATH_SEPARATOR.dirname(__FILE__));
+require_once('./src/data/config.php');
 
 
 class Mysql {
@@ -63,13 +64,13 @@ class Mysql {
 	//====================================== 
 	public function open() {
 
-		$this->server = $GLOBALS['db_server'];
-		$this->user = $GLOBALS['db_username'];
-		$this->password = $GLOBALS['db_password'];
-		$this->database = $GLOBALS['db_name'];
+		$this->server = Config.db_server;
+		$this->user = Config.db_username;
+		$this->password = Config.db_password;
+		$this->database = Config.db_name;
 		
-		$this->linkMode = $GLOBALS['db_linkMode'];
-		$this->character = $GLOBALS['db_character'];
+		$this->linkMode = Config.db_linkMode;
+		$this->character = Config.db_character;
 		
 		$this->link_id = $this->linkMode ? mysql_pconnect($this->server, $this->user, $this->password, $this->database) : 
 		                                   mysql_connect($this->server, $this->user, $this->password, $this->database);

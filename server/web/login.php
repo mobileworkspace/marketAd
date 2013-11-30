@@ -8,10 +8,11 @@
 
 session_start();  
 
-require_once(dirname(__FILE__).'/../src/data/config.php');
-require_once(dirname(__FILE__).'/../src/data/ApiCaller.php'); 
+set_include_path('./'.PATH_SEPARATOR.dirname(__FILE__));
+require_once('/../src/data/config.php');
+require_once('/../src/data/ApiCaller.php'); 
 
-$apicaller = new ApiCaller($app_id, $app_key, $seo_url);  
+$apicaller = new ApiCaller(Config.app_id, Config.app_key, Config.seo_url);  
  
 $result = $apicaller->callApi(array(
     'controller' => $_POST['controller'],
@@ -30,7 +31,7 @@ if ( $result['success']==true ) { //登录成功
 }else{
 	
 	echo '登录失败，原因：'.$result['errormsg'];
-	header('Location: index.php');
+	header('Location: /../index.php');
 }
 
 exit();  

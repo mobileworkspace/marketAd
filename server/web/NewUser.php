@@ -8,13 +8,12 @@
  
 session_start();
 
-require_once(dirname(__FILE__).'/../src/data/config.php');
-require_once(dirname(__FILE__).'/../src/data/ApiCaller.php');
+set_include_path('./'.PATH_SEPARATOR.dirname(__FILE__));
+require_once('/../src/data/config.php');
+require_once('/../src/data/ApiCaller.php'); 
 
-$apicaller = new ApiCaller($app_id, $app_key, $seo_url); 
+$apicaller = new ApiCaller(Config.app_id, Config.app_key, Config.seo_url);  
  
-$apicaller->checkLogin();
-
 $result = $apicaller->callApi(array(
 	'controller' => 'todo',
 	'action' => 'create',
