@@ -9,10 +9,10 @@
 session_start();  
 
 set_include_path('./'.PATH_SEPARATOR.dirname(__FILE__));
-require_once('/../src/data/config.php');
-require_once('/../src/data/ApiCaller.php'); 
+require_once('../src/data/config.php');
+require_once('../src/data/ApiCaller.php'); 
 
-$apicaller = new ApiCaller(Config.app_id, Config.app_key, Config.seo_url);  
+$apicaller = new ApiCaller(Config::$app_id, Config::$app_key, Config::$seo_url);  
  
 $result = $apicaller->callApi(array(
     'controller' => $_POST['controller'],
@@ -21,17 +21,16 @@ $result = $apicaller->callApi(array(
     'userpass' => $_POST['login_password']
 ));  
 
-
-if ( $result['success']==true ) { //µÇÂ¼³É¹¦
+if ( $result['success']==true ) { //ç™»å½•æˆåŠŸ
  
 	$_SESSION['user'] = $result;
 	
-	header('Location: xxx.php');
+	header('Location: /web/NewUser.php');
 	
 }else{
 	
-	echo 'µÇÂ¼Ê§°Ü£¬Ô­Òò£º'.$result['errormsg'];
-	header('Location: /../index.php');
+	print "ç™»å½•å¤±è´¥ï¼ŒåŸå› ï¼š".$result['errormsg'];
+	header('Location: /index.php');
 }
 
 exit();  

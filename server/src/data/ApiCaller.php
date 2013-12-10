@@ -32,7 +32,7 @@
 	        $enc_request = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $this->_app_key, json_encode($request_params), MCRYPT_MODE_ECB));  
 	          
 	        //create the params array, which will be the POST parameters  
-	        $params = array();  
+	        $params = $_POST;  
 	        $params['enc_request'] = $enc_request;  
 	        $params['app_id'] = $this->_app_id;
 	        
@@ -45,13 +45,19 @@
 	 
 	        //execute the request  
 	        $result = curl_exec($ch);  
-	          
+	        
+	    	if (curl_errno($ch)) {
+			    echo 'Curl error: ' . curl_error($ch);
+			}
+
+	        curl_close($ch);
+	        
 	        //json_decode the result  
 	        $result = @json_decode($result);  
 	          
 	        //check if we're able to json_decode the result correctly  
-	        if( $result == false || isset($result['success']) == false ) {  
-	            throw new Exception('Request was not correct');  
+	        if( $result === false || isset($result['success']) == false ) {  
+	            throw new Exception('Request is not correct');  
 	        }  
 	          
 	        //if there was an error in the request, throw an exception  
@@ -60,7 +66,7 @@
 	        }  
 	          
 		}catch( Exception $e ) {
-			//²¶»ñÈÎºÎÒ»´Î®³£²¢ÇÒ±¨¸æÎÊÌâ  
+			//æ•è·ä»»ä½•ä¸€æ¬¡ç•°å¸¸å¹¶ä¸”æŠ¥å‘Šé—®é¢˜   
 			$result = array ();
 			$result['success'] = false;
 			$result['errormsg'] = $e->getMessage();

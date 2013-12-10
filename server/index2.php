@@ -45,12 +45,10 @@
                     
                     <input type="hidden" id="controller" name="controller" value="UserController"/>  
                     <input type="hidden" id="action" name="action" value="login"/>             
-                      
+                    <label for="login_password">密  码密  码密  码密  码密  码:</label>  
                 </div> 
             </div> 
-            <div class="actions"> 
-                <button type="submit" name="login_submit" class="btn primary large">Login or Register</button> 
-            </div> 
+
         </form> 
     </div> 
 </body> 

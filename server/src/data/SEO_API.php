@@ -10,17 +10,17 @@
 session_start(); 
 
 set_include_path('./'.PATH_SEPARATOR.dirname(__FILE__));
-require_once('/../src/data/config.php');
+require_once('./config.php');
 
 function excute() {
 	
 	//Define our id-key pairs  
-	$applications = array( Config.app_id => Config.app_key);
+	$applications = array( Config::$app_id => Config::$app_key);
 	
-	//ÔÚÒ»¸ötry-catch¿éÖÐ°üº¬ËùÓÐ´úÂë£¬À´²¶»ñËùÓÐ¿ÉÄÜµÄÒì³£!  
+	//åœ¨ä¸€ä¸ªtry-catchå—ä¸­åŒ…å«æ‰€æœ‰ä»£ç ï¼Œæ¥æ•èŽ·æ‰€æœ‰å¯èƒ½çš„å¼‚å¸¸!  
 	try {
 		
-		//»ñµÃÔÚPOST/GET requestÖÐµÄËùÓÐ²ÎÊý  
+		//èŽ·å¾—åœ¨POST/GET requestä¸­çš„æ‰€æœ‰å‚æ•° 
 		$params = $_POST;
 		
 		//get the encrypted request  
@@ -35,33 +35,35 @@ function excute() {
 	    }  
 	      
 	    //decrypt the request  
-	    $params = json_decode(trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $applications[$app_id], base64_decode($enc_request), MCRYPT_MODE_ECB)));  
+	    $params = json_decode(trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $applications[$app_id], base64_decode($enc_request), MCRYPT_MODE_ECB)), true);  
 	      
 	    //check if the request is valid by checking if it's an array and looking for the controller and action  
-	    if( $params == false || isset($params->controller) == false || isset($params->action) == false ) {  
+	    if( $params == false || isset($params['controller']) == false || isset($params['action']) == false ) {  
 	        throw new Exception('Request is not valid'); 
 	    }  
 	    
-		//»ñÈ¡controller²¢°ÑËüÕýÈ·µÄ¸ñÊ½»¯Ê¹µÃµÚÒ»¸ö×ÖÄ¸×ÜÊÇ´óÐ´µÄ  
-		$controller = ucfirst(strtolower($params['controller']));
+		//èŽ·å–controllerå¹¶æŠŠå®ƒæ­£ç¡®çš„æ ¼å¼åŒ–ä½¿å¾—ç¬¬ä¸€ä¸ªå­—æ¯æ€»æ˜¯å¤§å†™çš„
+		//$controller = ucfirst(strtolower($params['controller']));
+		$controller = $params['controller'];
 	
-		//»ñÈ¡action²¢°ÑËüÕýÈ·µÄ¸ñÊ½»¯£¬Ê¹ËüËùÓÐµÄ×ÖÄ¸¶¼ÊÇÐ¡Ð´µÄ£¬²¢×·¼ÓÒ»¸ö'Action'  
+		//èŽ·å–actionå¹¶æŠŠå®ƒæ­£ç¡®çš„æ ¼å¼åŒ–ï¼Œä½¿å®ƒæ‰€æœ‰çš„å­—æ¯éƒ½æ˜¯å°å†™çš„ï¼Œå¹¶è¿½åŠ ä¸€ä¸ª'Action'  
 		$action = $params['action'] . 'Action';
 	
-		//¼ì²écontrollerÊÇ·ñ´æÔÚ¡£Èç¹û²»´æÔÚ£¬Å×³öÒì³£  
-		if (file_exists("controllers/{$controller}.php")) {
-			include_once "controllers/{$controller}.php";
+		//æ£€æŸ¥controlleræ˜¯å¦å­˜åœ¨ã€‚å¦‚æžœä¸å­˜åœ¨ï¼ŒæŠ›å‡ºå¼‚å¸¸
+		$pathfile = "../controllers/{$controller}.php";
+		if (file_exists($pathfile)) {
+			include_once $pathfile;
 		} else {
 			throw new Exception('Controller is invalid.');
 		}
 		
-		//¼ÇÂ¼controllerµÄÃû³Æ
+		//è®°å½•controllerçš„åç§°
 		$controller_name = $controller;
 		
-		//´´½¨Ò»¸öÐÂµÄcontrollerÊµÀý£¬²¢°Ñ´ÓrequestÖÐ»ñÈ¡µÄ²ÎÊý´«¸øËü  
+		//åˆ›å»ºä¸€ä¸ªæ–°çš„controllerå®žä¾‹ï¼Œå¹¶æŠŠä»Žrequestä¸­èŽ·å–çš„å‚æ•°ä¼ ç»™å®ƒ  
 		$controller = new $controller ($params);
 	
-		//¼ì²écontrollerÖÐÊÇ·ñ´æÔÚaction¡£Èç¹û²»´æÔÚ£¬Å×³öÒì³£¡£  
+		//æ£€æŸ¥controllerä¸­æ˜¯å¦å­˜åœ¨actionã€‚å¦‚æžœä¸å­˜åœ¨ï¼ŒæŠ›å‡ºå¼‚å¸¸ã€‚
 		if (method_exists($controller, $action) === false) {
 			throw new Exception('Action is invalid.');
 		}
@@ -72,18 +74,18 @@ function excute() {
 		   ) {
 	    	
 	    	if ( $_SESSION['user']==null ) {
-	//			echo 'ÇëÏÈµÇÂ¼ÏµÍ³';
+//			echo 'è¯·å…ˆç™»å½•ç³»ç»Ÿ';
 				header('Location: index.php');
 				exit();
 			}
 	    }
 	
-		//Ö´ÐÐaction  
-		$result['data'] = $controller-> $action ();
+		//æ‰§è¡Œaction   
+		$result['data'] = @json_encode($controller-> $action($params));
 		$result['success'] = true;
 	
 	} catch (Exception $e) {
-		//²¶»ñÈÎºÎÒ»´Î®³£²¢ÇÒ±¨¸æÎÊÌâ  
+		//æ•èŽ·ä»»ä½•ä¸€æ¬¡ç•°å¸¸å¹¶ä¸”æŠ¥å‘Šé—®é¢˜  
 		$result = array ();
 		$result['success'] = false;
 		$result['errormsg'] = $e->getMessage();
@@ -91,6 +93,7 @@ function excute() {
 	
 	return $result['data'];
 }
+
 
 excute();
 

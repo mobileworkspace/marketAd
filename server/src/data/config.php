@@ -7,21 +7,21 @@
  */
 class Config {
 	
-	//Êı¾İ¿â²¿·ÖÅäÖÃ
-	public static $db_server='localhost';   //Êı¾İ¿âÁ¬½Ó·şÎñÆ÷
-	public static $db_name='test';          //Êı¾İ¿âÃû³Æ
-	public static $db_username='root';      //Êı¾İ¿âÁ¬½ÓÓÃ»§
-	public static $db_password='';          //Êı¾İ¿âÁ¬½ÓÃÜÂë
-	public static $db_character='UTF8';     //Êı¾İ¿âÊı¾İ±àÂë
-	public static $db_linkMode='0';         //Á¬½ÓÊı¾İ¿âÄ£Ê½£¨³Ö¾Ã »ò ÁÙÊ±£©
+	//æ•°æ®åº“éƒ¨åˆ†é…ç½®
+	public static $db_server='localhost';   //æ•°æ®åº“è¿æ¥æœåŠ¡å™¨
+	public static $db_name='test';          //æ•°æ®åº“åç§°
+	public static $db_username='root';      //æ•°æ®åº“è¿æ¥ç”¨æˆ·
+	public static $db_password='';          //æ•°æ®åº“è¿æ¥å¯†ç 
+	public static $db_character='UTF8';     //æ•°æ®åº“æ•°æ®ç¼–ç 
+	public static $db_linkMode='0';         //è¿æ¥æ•°æ®åº“æ¨¡å¼ï¼ˆæŒä¹… æˆ– ä¸´æ—¶ï¼‰
 	public static $fetchMode='MYSQL_ASSOC';
 	
-	//·şÎñÆ÷²¿·ÖÅäÖÃ
+	//æœåŠ¡å™¨éƒ¨åˆ†é…ç½®
 	public static $host='';
 	public static $port=80;
-	public static $seo_url='http://xxx:80/seo_api';
+	public static $seo_url='http://localhost:80/src/data/SEO_API.php';
 	
-	//¼ÓÃÜ²¿·ÖÅäÖÃ
+	//åŠ å¯†éƒ¨åˆ†é…ç½®
 	public static $app_id='MyApp1';
 	public static $app_key='2we8r6ac6c9g23dt46ba02d19c7915t2';   //randomly generated app key
 

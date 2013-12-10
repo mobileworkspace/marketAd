@@ -5,7 +5,10 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
- 
+
+set_include_path('./'.PATH_SEPARATOR.dirname(__FILE__));
+require_once('../model/User.php');
+
  class UserController{
  	
  	private $_params;
@@ -15,9 +18,9 @@
 		$this->_params = $params;
 	}
 	
-	public function loginAction($username,$userpass){
+	public function loginAction(){
 		$user = new User();
-		$user.get($username,$userpass);
+		return $user->get($params['login_username'],$params['login_password']);
 	}
 	
 	public function createAction()
