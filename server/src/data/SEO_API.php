@@ -61,7 +61,7 @@ function excute() {
 		$controller_name = $controller;
 		
 		//创建一个新的controller实例，并把从request中获取的参数传给它  
-		$controller = new $controller ($params);
+		$controller = new $controller($params);
 	
 		//检查controller中是否存在action。如果不存在，抛出异常。
 		if (method_exists($controller, $action) === false) {
@@ -81,8 +81,14 @@ function excute() {
 	    }
 	
 		//执行action   
-		$result['data'] = @json_encode($controller-> $action($params));
-		$result['success'] = true;
+		$data = $controller-> $action();
+		if ($data==null){
+			$result['data'] = '';
+			$result['success'] = false;
+		}else{
+			$result['data'] = $data;
+			$result['success'] = true;
+		}
 	
 	} catch (Exception $e) {
 		//捕获任何一次異常并且报告问题  
@@ -91,9 +97,8 @@ function excute() {
 		$result['errormsg'] = $e->getMessage();
 	}
 	
-	return $result['data'];
+	echo @json_encode($result);
 }
-
 
 excute();
 

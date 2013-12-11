@@ -38,31 +38,28 @@
 	        
 	        //initialize and setup the curl handler  
 	        $ch = curl_init();  
-	        curl_setopt($ch, CURLOPT_URL, $this->_api_url);  
-	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);  
-	        curl_setopt($ch, CURLOPT_POST, count($params));  
+	        
+	        curl_setopt($ch, CURLOPT_POST, true);  
+	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+	        curl_setopt($ch, CURLOPT_URL, $this->_api_url); 
+	        //curl_setopt($ch, CURLOPT_POST, count($params));  
 	        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);  
 	 
 	        //execute the request  
 	        $result = curl_exec($ch);  
-	        
+	        /*
 	    	if (curl_errno($ch)) {
 			    echo 'Curl error: ' . curl_error($ch);
 			}
-
+			*/
 	        curl_close($ch);
 	        
 	        //json_decode the result  
-	        $result = @json_decode($result);  
-	          
+	        $result = @json_decode($result,true);
+	        
 	        //check if we're able to json_decode the result correctly  
-	        if( $result === false || isset($result['success']) == false ) {  
+	        if( $result == false || isset($result['success']) == false ) {  
 	            throw new Exception('Request is not correct');  
-	        }  
-	          
-	        //if there was an error in the request, throw an exception  
-	        if( $result['success'] == false ) {  
-	            throw new Exception($result['errormsg']);  
 	        }  
 	          
 		}catch( Exception $e ) {
@@ -72,10 +69,9 @@
 			$result['errormsg'] = $e->getMessage();
 		}
  
- 		//if everything went great, return the data  
-	    return $result['data'];
+		//if everything went great, return the data  
+    	return $result;
     }  
-    
 } 
 
 ?>

@@ -23,14 +23,14 @@ $result = $apicaller->callApi(array(
 
 if ( $result['success']==true ) { //登录成功
  
-	$_SESSION['user'] = $result;
+	$_SESSION['user'] = $result['data'];
 	
-	header('Location: /web/NewUser.php');
+	header('Location: ./NewUser.php');
 	
 }else{
 	
 	print "登录失败，原因：".$result['errormsg'];
-	header('Location: /index.php');
+	header('Location: ../index.php');
 }
 
 exit();  

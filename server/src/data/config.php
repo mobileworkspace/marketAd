@@ -9,9 +9,9 @@ class Config {
 	
 	//数据库部分配置
 	public static $db_server='localhost';   //数据库连接服务器
-	public static $db_name='test';          //数据库名称
+	public static $db_name='market_ad';     //数据库名称
 	public static $db_username='root';      //数据库连接用户
-	public static $db_password='';          //数据库连接密码
+	public static $db_password='cao042279'; //数据库连接密码
 	public static $db_character='UTF8';     //数据库数据编码
 	public static $db_linkMode='0';         //连接数据库模式（持久 或 临时）
 	public static $fetchMode='MYSQL_ASSOC';

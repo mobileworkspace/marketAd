@@ -9,7 +9,7 @@
  *
  ** 功 能: 连接 MYSQL数据库  然后对 MYSQL 进行各种操作                                                  
 * ------------------------------------------------------------------------------------------------------ *
-* 方 法:     open           -- 连接数据库                                                         
+* 方 法:    open           -- 连接数据库                                                         
 *          query          -- 数据查询                                                               
 *          setFetchMode   -- 设置取得记录的模式                                                         
 *          fetchRow       -- 从记录集中取出一条记录                                            
@@ -64,13 +64,13 @@ class Mysql {
 	//====================================== 
 	public function open() {
 
-		$this->server = Config.db_server;
-		$this->user = Config.db_username;
-		$this->password = Config.db_password;
-		$this->database = Config.db_name;
+		$this->server = Config::$db_server;
+		$this->user = Config::$db_username;
+		$this->password = Config::$db_password;
+		$this->database = Config::$db_name;
 		
-		$this->linkMode = Config.db_linkMode;
-		$this->character = Config.db_character;
+		$this->linkMode = Config::$db_linkMode;
+		$this->character = Config::$db_character;
 		
 		$this->link_id = $this->linkMode ? mysql_pconnect($this->server, $this->user, $this->password, $this->database) : 
 		                                   mysql_connect($this->server, $this->user, $this->password, $this->database);
@@ -253,7 +253,7 @@ class Mysql {
 	//参数：$querytype 查询的类型 
 	//====================================== 
 	function checkSql($db_string, $querytype = 'select') {
-		
+/*		
 		$clean = '';
 		$old_pos = 0;
 		$pos = -1;
@@ -327,6 +327,7 @@ class Mysql {
 		} else {
 			return $db_string;
 		}
+*/		
 	}
 	
 	//====================================== 

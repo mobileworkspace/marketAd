@@ -20,7 +20,7 @@ require_once('../model/User.php');
 	
 	public function loginAction(){
 		$user = new User();
-		return $user->get($params['login_username'],$params['login_password']);
+		return $user->get($this->_params['username'],$this->_params['userpass']);
 	}
 	
 	public function createAction()
