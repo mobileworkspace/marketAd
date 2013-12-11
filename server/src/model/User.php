@@ -6,7 +6,7 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
 set_include_path('./'.PATH_SEPARATOR.dirname(__FILE__));
-require_once('../data/db.php');
+require_once('/../data/db.php');
 
 class User {
  	
@@ -23,10 +23,6 @@ class User {
 			}
 			
 			$data = $mysql->fetchRow();
-			
-			if ($data == false) {
-				return null;
-			}
 			
 			return $data;
  		}

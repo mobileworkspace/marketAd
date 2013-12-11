@@ -32,7 +32,7 @@
 */
 
 set_include_path('./'.PATH_SEPARATOR.dirname(__FILE__));
-require_once('./config.php');
+require_once('/./config.php');
 
 
 class Mysql {

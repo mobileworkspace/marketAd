@@ -33,7 +33,7 @@
     </div> 
     
     <div id="main" class="container"> 
-        <form class="form-stacked" method="POST" action="/web/login.php"> 
+        <form class="form-stacked" method="POST" action="seo.php"> 
             <div class="row"> 
                 <div class="span5 offset5">
                  

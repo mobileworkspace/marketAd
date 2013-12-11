@@ -7,9 +7,9 @@
  */
 
 set_include_path('./'.PATH_SEPARATOR.dirname(__FILE__));
-require_once('../model/User.php');
+require_once('/../model/User.php');
 
- class UserController{
+class UserController{
  	
  	private $_params;
 	
@@ -20,7 +20,14 @@ require_once('../model/User.php');
 	
 	public function loginAction(){
 		$user = new User();
-		return $user->get($this->_params['username'],$this->_params['userpass']);
+		$data = $user->get($this->_params['login_username'],$this->_params['login_password']);
+		
+		if ($data==false) {
+			header('Location: ../web/NewUser.php');
+		}else{
+			header('Location: ../web/login.php');
+		}
+		
 	}
 	
 	public function createAction()
